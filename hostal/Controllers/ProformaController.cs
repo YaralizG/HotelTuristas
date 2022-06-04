@@ -33,7 +33,8 @@ namespace hostal.Controllers
             items = items.
                 Include(p => p.Proforma.Producto).
                 Include(p => p.ProformaServi.Servicio).
-                Where(s => s.Proforma.UserID.Equals(userID)  && s.Proforma.Status.Equals("PENDIENTE") && s.ProformaServi.UserID.Equals(userID) && s.ProformaServi.Status.Equals("PENDIENTE"));
+                Include(p => p.ProformaPaquetes.Paquetes).
+                Where(s => s.Proforma.UserID.Equals(userID)  && s.Proforma.Status.Equals("PENDIENTE") && s.ProformaServi.UserID.Equals(userID) && s.ProformaServi.Status.Equals("PENDIENTE")&& s.ProformaPaquetes.UserID.Equals(userID) && s.ProformaPaquetes.Status.Equals("PENDIENTE"));
                 
             var elements = await items.ToListAsync();  
             return View(elements);

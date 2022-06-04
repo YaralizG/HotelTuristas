@@ -58,8 +58,10 @@
     }else{
         <tr>
             <td>
-                <img class="img-responsive" width="230" height="200"
-                    src="/images/@item.Proforma.Producto.Imagen" alt="@item.Proforma.Producto.Imagen"  />
+              
+
+                    <img class="img-responsive" width="200" height="150"
+                       src="@item.Proforma.Producto.Imagen" alt="@item.Proforma.Producto.Imagen"  />
                 
             </td>
             <td>
@@ -139,8 +141,10 @@
     }else{
         <tr>
             <td>
-                <img class="img-responsive" width="230" height="200"
-                    src="/images/@item.ProformaServi.Servicio.Imagen" alt="@item.ProformaServi.Servicio.Imagen"  />
+               
+
+                    <img class="img-responsive" width="200" height="150"
+                       src="@item.ProformaServi.Servicio.Imagen" alt="@item.ProformaServi.Servicio.Imagen"  />
                 
             </td>
             <td>
@@ -184,7 +188,7 @@
 
       <p align="center" style="font-size: 200%;">Total S/. @totals</p>
 
-<!------------------------------------------TOTAL A PAGAR---------------------------------->
+<!------------------------------------------TOTAL---------------------------------->
 
 @{
         decimal totaltotal = 0;
@@ -198,8 +202,114 @@
     }
 <br>
 <hr>
-    <p align="center" style="font-size: 400%;">TOTAL A PAGAR S/. @totaltotal</p>
+    <p align="center" style="font-size: 400%;">TOTAL S/. @totaltotal</p>
 
     <a class="btn btn-primary button" asp-controller="Pago" asp-action="Create" asp-route-monto="@totaltotal">Pagar</a>
 <hr>
+
+
+<!----------------------------------PROFORMA PAQUETES PROMOCIONALES----------------------------------->
+    <br>
+    <hr>
+    <center><h4>PROMOCIONES</h4></center>
+    <hr>
+    <br>
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">
+                @Html.DisplayNameFor(model => listProformass.FirstOrDefault().ProformaPaquetes.Paquetes.Imagen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => listProformass.FirstOrDefault().ProformaPaquetes.Paquetes.Nombre)
+            </th>
+           
+            <th>
+                @Html.DisplayNameFor(model => listProformass.FirstOrDefault().ProformaPaquetes.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => listProformass.FirstOrDefault().ProformaPaquetes.Precio)
+            </th>
+            
+             <th>
+                 Subtotal
+             </th>     
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+
+    if(item.ProformaPaquetes.Paquetes.Id==0){      
+
+
+    }else{
+        <tr>
+            <td>              
+
+                    <img class="img-responsive" width="200" height="150"
+                       src="@item.ProformaPaquetes.Paquetes.Imagen" alt="@item.ProformaPaquetes.Paquetes.Imagen"  />
+                
+            </td>            
+            <td>
+                @Html.DisplayFor(modelItem => item.ProformaPaquetes.Paquetes.Nombre)
+            </td>
+                       
+            <td>
+                @Html.DisplayFor(modelItem => item.ProformaPaquetes.Quantity)
+            </td>  
+            <td>
+                @Html.DisplayFor(modelItem => item.ProformaPaquetes.Precio)
+            </td>
+            <td>
+                @{
+                    decimal subtotal = 0;
+                     var contarsub = 0;
+                    subtotal = item.ProformaPaquetes.Precio * item.ProformaPaquetes.Quantity;
+                    contarsub++;
+                }
+                <p>S/. @subtotal</p>
+            </td>          
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-success">Editar</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Eliminar</a>
+            </td>
+        </tr>
+        }
+}
+    </tbody>
+</table>
+
+    @{
+        decimal totalpq = 0;
+        var contarpq = 0;
+    }
+    @foreach (var item in Model)
+    {           
+        totalpq = totalpq + item.ProformaPaquetes.Precio * item.ProformaPaquetes.Quantity;
+        contarpq++;
+           
+    }
+
+      <p align="center" style="font-size: 200%;">Total S/. @totalpq</p>
+
+      <!------------------------------------------TOTAL A PAGAR---------------------------------->
+
+@{
+        decimal totaltotaltotal = 0;
+        var contartotal2 = 0;
+    }
+    @foreach (var item in Model)
+    {           
+        totaltotaltotal = totaltotal + totalpq;
+        contartotal2++;
+           
+    }
+<br>
+<hr>
+    <p align="center" style="font-size: 400%;">TOTAL A PAGAR S/. @totaltotaltotal</p>
+
+    <a class="btn btn-primary button" asp-controller="Pago" asp-action="Create" asp-route-monto="@totaltotaltotal">Pagar</a>
+<hr>
 </body>
+

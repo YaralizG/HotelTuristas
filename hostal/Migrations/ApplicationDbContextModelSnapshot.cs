@@ -307,6 +307,53 @@ namespace hostal.Migrations
                     b.ToTable("t_pago");
                 });
 
+            modelBuilder.Entity("hostal.Models.Paquetes", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Descripción")
+                        .HasColumnType("text")
+                        .HasColumnName("Descripción");
+
+                    b.Property<string>("Estado")
+                        .HasColumnType("text")
+                        .HasColumnName("Estado");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("Fecha");
+
+                    b.Property<string>("Imagen")
+                        .HasColumnType("text")
+                        .HasColumnName("Imagen");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("text")
+                        .HasColumnName("Nombre");
+
+                    b.Property<decimal>("Precio")
+                        .HasColumnType("numeric")
+                        .HasColumnName("Precio");
+
+                    b.Property<int?>("ProductoId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ServicioId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductoId");
+
+                    b.HasIndex("ServicioId");
+
+                    b.ToTable("t_paquetes");
+                });
+
             modelBuilder.Entity("hostal.Models.Pedido", b =>
                 {
                     b.Property<int>("ID")
@@ -430,6 +477,36 @@ namespace hostal.Migrations
                     b.ToTable("t_proforma");
                 });
 
+            modelBuilder.Entity("hostal.Models.ProformaPaquetes", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int?>("PaquetesId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("Precio")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserID")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PaquetesId");
+
+                    b.ToTable("t_ProformaPaquetes");
+                });
+
             modelBuilder.Entity("hostal.Models.ProformaServi", b =>
                 {
                     b.Property<int>("Id")
@@ -471,12 +548,17 @@ namespace hostal.Migrations
                     b.Property<int?>("ProformaId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("ProformaPaquetesId")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("ProformaServiId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProformaId");
+
+                    b.HasIndex("ProformaPaquetesId");
 
                     b.HasIndex("ProformaServiId");
 
@@ -586,6 +668,21 @@ namespace hostal.Migrations
                     b.Navigation("Producto");
                 });
 
+            modelBuilder.Entity("hostal.Models.Paquetes", b =>
+                {
+                    b.HasOne("hostal.Models.Product", "Producto")
+                        .WithMany()
+                        .HasForeignKey("ProductoId");
+
+                    b.HasOne("hostal.Models.Servicios", "Servicio")
+                        .WithMany()
+                        .HasForeignKey("ServicioId");
+
+                    b.Navigation("Producto");
+
+                    b.Navigation("Servicio");
+                });
+
             modelBuilder.Entity("hostal.Models.Pedido", b =>
                 {
                     b.HasOne("hostal.Models.Pago", "pago")
@@ -604,6 +701,15 @@ namespace hostal.Migrations
                     b.Navigation("Producto");
                 });
 
+            modelBuilder.Entity("hostal.Models.ProformaPaquetes", b =>
+                {
+                    b.HasOne("hostal.Models.Paquetes", "Paquetes")
+                        .WithMany()
+                        .HasForeignKey("PaquetesId");
+
+                    b.Navigation("Paquetes");
+                });
+
             modelBuilder.Entity("hostal.Models.ProformaServi", b =>
                 {
                     b.HasOne("hostal.Models.Servicios", "Servicio")
@@ -619,11 +725,17 @@ namespace hostal.Migrations
                         .WithMany()
                         .HasForeignKey("ProformaId");
 
+                    b.HasOne("hostal.Models.ProformaPaquetes", "ProformaPaquetes")
+                        .WithMany()
+                        .HasForeignKey("ProformaPaquetesId");
+
                     b.HasOne("hostal.Models.ProformaServi", "ProformaServi")
                         .WithMany()
                         .HasForeignKey("ProformaServiId");
 
                     b.Navigation("Proforma");
+
+                    b.Navigation("ProformaPaquetes");
 
                     b.Navigation("ProformaServi");
                 });

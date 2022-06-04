@@ -25,11 +25,14 @@ namespace hostal.Data
 
              public DbSet<hostal.Models.Pago> DataPago { get; set; }
 
-            public DbSet<hostal.Models.Pedido> DataPedido { get; set; }
+            public DbSet<hostal.Models.Pedido> DataPedido { get; set; }            
+
+            public DbSet<hostal.Models.DetallePedido> DataDetallePedido { get; set; }
 
             public DbSet<hostal.Models.Postergacion> DataPostergacion { get; set; }
-
-        public DbSet<hostal.Models.DetallePedido> DataDetallePedido { get; set; }
+            
+            public DbSet<hostal.Models.Paquetes> DataPaquetes { get; set; }
+            public DbSet<hostal.Models.ProformaPaquetes> DataProformaPaquetes { get; set; }
 
         }
 

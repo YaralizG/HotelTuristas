@@ -3423,3 +3423,9 @@ F:\USMP\2022 -I\software 2\PROYECTO FINAL\V1\HotelTuristas\hostal\obj\Debug\net5
 F:\USMP\2022 -I\software 2\PROYECTO FINAL\V1\HotelTuristas\hostal\obj\Debug\net5.0\Razor\Views\Postergacion\Editpostergacion.cshtml.g.cs
 F:\USMP\2022 -I\software 2\PROYECTO FINAL\V1\HotelTuristas\hostal\obj\Debug\net5.0\Razor\Views\Postergacion\Estadopostergacion.cshtml.g.cs
 F:\USMP\2022 -I\software 2\PROYECTO FINAL\V1\HotelTuristas\hostal\obj\Debug\net5.0\Razor\Views\Postergacion\Listarpostergacion.cshtml.g.cs
+F:\USMP\2022 -I\software 2\PROYECTO FINAL\V1\HotelTuristas\hostal\obj\Debug\net5.0\Razor\Views\Paquetes\Details.cshtml.g.cs
+F:\USMP\2022 -I\software 2\PROYECTO FINAL\V1\HotelTuristas\hostal\obj\Debug\net5.0\Razor\Views\Paquetes\Index.cshtml.g.cs
+F:\USMP\2022 -I\software 2\PROYECTO FINAL\V1\HotelTuristas\hostal\obj\Debug\net5.0\Razor\Views\Paquetes\Create.cshtml.g.cs
+F:\USMP\2022 -I\software 2\PROYECTO FINAL\V1\HotelTuristas\hostal\obj\Debug\net5.0\Razor\Views\Paquetes\Edit.cshtml.g.cs
+F:\USMP\2022 -I\software 2\PROYECTO FINAL\V1\HotelTuristas\hostal\obj\Debug\net5.0\Razor\Views\Paquetes\ListarPaquetes.cshtml.g.cs
+F:\USMP\2022 -I\software 2\PROYECTO FINAL\V1\HotelTuristas\hostal\obj\Debug\net5.0\Razor\Views\Paquetes\Delete.cshtml.g.cs

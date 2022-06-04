@@ -58,8 +58,9 @@ namespace hostal.Controllers
                 Where(s => s.UserID.Equals(ProformaServi.UserID));
 
                 Proformass proformass = new Proformass();
+
                 proformass.ProformaServi = ProformaServi;               
-                await _context.SaveChangesAsync();
+                _context.Add(proformass);  
 
                 /************************GUARDAR 0 EN PRODUCTO*************************/
 
@@ -78,7 +79,28 @@ namespace hostal.Controllers
 
                 proformass.Proforma = proforma;                
                  _context.Add(proformass);
+
+                /************************GUARDAR 0 EN PAQUETES*************************/
+
+                var Paquetes = await _context.DataPaquetes.FindAsync(id=0);
+                ProformaPaquetes ProformaPaquetes = new ProformaPaquetes();
+                ProformaPaquetes.Paquetes= Paquetes;
+                ProformaPaquetes.Precio = Paquetes.Precio;
+                ProformaPaquetes.Quantity = 0;
+                ProformaPaquetes.UserID = userID;
+                _context.Add(ProformaPaquetes); 
+                 /*AGREGAR ID TABLA PROFORMASS*/
+                 var proformapq = from o in _context.DataProformaPaquetes select o;
+                proformapq = proformapq.
+                Include(p => p.Id).
+                Where(s => s.UserID.Equals(ProformaPaquetes.UserID));
+
+                proformass.ProformaPaquetes = ProformaPaquetes;
+                _context.Add(proformass);
+
+                
                 await _context.SaveChangesAsync();
+
 
                 return  RedirectToAction(nameof(Index));
             }

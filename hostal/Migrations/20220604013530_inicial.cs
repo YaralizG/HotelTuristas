@@ -285,6 +285,38 @@ namespace hostal.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "t_paquetes",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Nombre = table.Column<string>(type: "text", nullable: true),
+                    Fecha = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    ProductoId = table.Column<int>(type: "integer", nullable: true),
+                    ServicioId = table.Column<int>(type: "integer", nullable: true),
+                    Descripción = table.Column<string>(type: "text", nullable: true),
+                    Precio = table.Column<decimal>(type: "numeric", nullable: false),
+                    Imagen = table.Column<string>(type: "text", nullable: true),
+                    Estado = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_t_paquetes", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_t_paquetes_t_product_ProductoId",
+                        column: x => x.ProductoId,
+                        principalTable: "t_product",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_t_paquetes_t_servicios_ServicioId",
+                        column: x => x.ServicioId,
+                        principalTable: "t_servicios",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "t_proformaserv",
                 columns: table => new
                 {
@@ -336,13 +368,37 @@ namespace hostal.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "t_ProformaPaquetes",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserID = table.Column<string>(type: "text", nullable: true),
+                    PaquetesId = table.Column<int>(type: "integer", nullable: true),
+                    Quantity = table.Column<int>(type: "integer", nullable: false),
+                    Precio = table.Column<decimal>(type: "numeric", nullable: false),
+                    Status = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_t_ProformaPaquetes", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_t_ProformaPaquetes_t_paquetes_PaquetesId",
+                        column: x => x.PaquetesId,
+                        principalTable: "t_paquetes",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "t_proformass",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ProformaId = table.Column<int>(type: "integer", nullable: true),
-                    ProformaServiId = table.Column<int>(type: "integer", nullable: true)
+                    ProformaServiId = table.Column<int>(type: "integer", nullable: true),
+                    ProformaPaquetesId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -351,6 +407,12 @@ namespace hostal.Migrations
                         name: "FK_t_proformass_t_proforma_ProformaId",
                         column: x => x.ProformaId,
                         principalTable: "t_proforma",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_t_proformass_t_ProformaPaquetes_ProformaPaquetesId",
+                        column: x => x.ProformaPaquetesId,
+                        principalTable: "t_ProformaPaquetes",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -414,9 +476,24 @@ namespace hostal.Migrations
                 column: "ProductoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_t_paquetes_ProductoId",
+                table: "t_paquetes",
+                column: "ProductoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_t_paquetes_ServicioId",
+                table: "t_paquetes",
+                column: "ServicioId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_t_proforma_ProductoId",
                 table: "t_proforma",
                 column: "ProductoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_t_ProformaPaquetes_PaquetesId",
+                table: "t_ProformaPaquetes",
+                column: "PaquetesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_t_proformaserv_ServicioId",
@@ -427,6 +504,11 @@ namespace hostal.Migrations
                 name: "IX_t_proformass_ProformaId",
                 table: "t_proformass",
                 column: "ProformaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_t_proformass_ProformaPaquetesId",
+                table: "t_proformass",
+                column: "ProformaPaquetesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_t_proformass_ProformaServiId",
@@ -476,10 +558,16 @@ namespace hostal.Migrations
                 name: "t_proforma");
 
             migrationBuilder.DropTable(
+                name: "t_ProformaPaquetes");
+
+            migrationBuilder.DropTable(
                 name: "t_proformaserv");
 
             migrationBuilder.DropTable(
                 name: "t_pago");
+
+            migrationBuilder.DropTable(
+                name: "t_paquetes");
 
             migrationBuilder.DropTable(
                 name: "t_product");

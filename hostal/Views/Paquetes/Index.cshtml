@@ -1,4 +1,4 @@
-@model IEnumerable<hostal.Models.Product>
+@model IEnumerable<hostal.Models.Paquetes>
 
 @{
     ViewData["Title"] = "Catalogo";  
@@ -24,7 +24,7 @@
     <h1>@ViewData["Message"]</h1>
     <div class="row">
       <div class="col">
-        <div id="products" class="mb-3">
+        <div id="paquetes" class="mb-3">
           <div class="row">
             @foreach (var item in Model) {
               

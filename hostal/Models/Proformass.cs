@@ -14,6 +14,8 @@ namespace hostal.Models
         public Proforma Proforma { get; set; }
 
         public ProformaServi ProformaServi { get; set; }
+
+        public ProformaPaquetes ProformaPaquetes { get; set; }
         
     }
 }
